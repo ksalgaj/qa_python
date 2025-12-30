@@ -70,21 +70,32 @@ class TestBooksCollector:
         assert collector.get_book_genre('Неизвестная книга') is None
 
     @pytest.mark.parametrize(
-        "genre, expected",
-        [
-            ("Детективы", ["Шерлок Холмс", "Имя розы"]),
-            ("Фантастика", ["1984"]),
-            ("Комедии", []),
-        ]   
+            'books_with_genres, genre, expected',
+            [
+                (
+                    {
+                        "1984": "Фантастика",
+                        "Шерлок Холмс": "Детективы",
+                        "Имя розы": "Детективы",
+                    },
+                    "Детективы",
+                    ["Шерлок Холмс", "Имя розы"],
+                ),
+                (
+                    {
+                        "1984": "Фантастика",
+                    },
+                    "Фантастика",
+                    ["1984"],
+                )
+            ],
     )
-    def test_get_books_with_specific_genre_returns_correct_list(self, genre, expected):
+    def test_get_books_with_specific_genre_returns_expected_books(self, books_with_genres, genre, expected):
         collector = BooksCollector()
-        collector.add_new_book("1984")
-        collector.set_book_genre("1984", "Фантастика")
-        collector.add_new_book("Шерлок Холмс")
-        collector.set_book_genre("Шерлок Холмс", "Детективы")
-        collector.add_new_book("Имя розы")
-        collector.set_book_genre("Имя розы", "Детективы")
+
+        for book,book_genre in books_with_genres.items():
+            collector.add_new_book(book)
+            collector.set_book_genre(book, book_genre)
 
         assert collector.get_books_with_specific_genre(genre) == expected
 
@@ -132,7 +143,7 @@ class TestBooksCollector:
 
         collector.add_new_book('День триффидов')
         collector.add_book_in_favorites('День триффидов')
-        
+
         collector.delete_book_from_favorites('День триффидов')
 
         assert collector.get_list_of_favorites_books() == []

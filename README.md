@@ -15,7 +15,7 @@
    - `test_get_book_genre_returns_none_for_nonexistent_book` — проверка, что метод возвращает `None` для несуществующей книги.
 
 4. **Получение книг по жанру (`get_books_with_specific_genre`)**
-   - `test_get_books_with_specific_genre_returns_correct_list` — проверка, что метод возвращает корректный список книг для указанного жанра. Используется параметризация для нескольких жанров.
+   - `test_get_books_with_specific_genre_returns_expected_books` — проверка, что метод возвращает корректный список книг для указанного жанра. Используется параметризация для нескольких жанров.
 
 5. **Получение полного словаря книг с жанрами (`get_books_genre`)**
    - `test_get_books_genre_returns_full_dict` — проверка, что возвращается полный словарь книг с жанрами.
